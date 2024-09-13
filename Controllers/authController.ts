@@ -44,11 +44,16 @@ export const signUp = async (
     });
 
     res.cookie("access_token", accessToken, {
-      maxAge: 7200000, // 15 minutes
+      httpOnly: true,
+          secure: true,
+          sameSite:"none",
+      maxAge: 7200000, 
     });
 
     res.cookie("refresh_token", refreshToken, {
-        httpOnly: true,
+      httpOnly: true,
+      secure: true,
+      sameSite:"none",
       
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
@@ -126,12 +131,18 @@ export const login = async (
 console.log("access",accessToken);
 
     res.cookie("access_token", accessToken, {
+      httpOnly: true,
+          secure: true,
+          sameSite:"none",
       
 
       maxAge: 7200000,// 15 minutes
     });
 
     res.cookie("refresh_token", refreshToken, {
+      httpOnly: true,
+          secure: true,
+          sameSite:"none",
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
