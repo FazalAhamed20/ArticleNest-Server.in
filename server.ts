@@ -31,7 +31,7 @@ app.use(cors({
     origin: 'https://article-nest-client-in.vercel.app',
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'custom-header'],
    
 }));
 
