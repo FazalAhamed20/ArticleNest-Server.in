@@ -130,13 +130,15 @@ console.log("access",accessToken);
 
     res.cookie("access_token", accessToken, {
       httpOnly: true,     
-      sameSite: 'none',    
+      sameSite: 'none', 
+      secure:true,   
       maxAge: 7200000,  
     });
 
     res.cookie("refresh_token", refreshToken, {
       httpOnly: true,     
-      sameSite: 'none',    
+      sameSite: 'none', 
+      secure:true,   
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
