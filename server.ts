@@ -30,7 +30,7 @@ app.use('/backend/Public', express.static(path.join(__dirname, 'Public')));
 app.use(cors({
     origin: 'https://article-nest-client-in.vercel.app',
     credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
+   
 }));
 
 
