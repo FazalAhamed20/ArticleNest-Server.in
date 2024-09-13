@@ -7,8 +7,14 @@ import { generateAccessToken } from "../utils/jwt/generateAccessToken";
 import { generateRefreshToken } from "../utils/jwt/generateRefreshToken";
 import userLoginValidation from "../utils/validation/userLoginValidation";
 import { comparePassword } from "../utils/bcrypt/comparePassword";
+import jwt from 'jsonwebtoken';
 
 dotenv.config();
+interface DecodedToken {
+  _id: string;
+ 
+  [key: string]: any;
+}
 
 export const signUp = async (
   req: Request,
@@ -288,5 +294,32 @@ export const updateProfile = async (
     });
   } catch (error) {
     next(error);
+  }
+};
+
+export const getUserId = (req: Request, res: Response) => {
+  const accessToken = req.cookies['access_token'];
+  const refreshToken = req.cookies['refresh_token'];
+  
+  if (!accessToken && !refreshToken) {
+    return res.status(401).json({ error: 'No token found' });
+  }
+
+  try {
+    let decoded: DecodedToken;
+    if (accessToken) {
+      decoded = jwt.verify(accessToken, String(process.env.JWT_SECRET)) as DecodedToken;
+    } else {
+      decoded = jwt.verify(refreshToken, String(process.env.REFRESH_TOKEN_SECRET)) as DecodedToken;
+    }
+
+    if (typeof decoded === 'string' || !decoded._id) {
+      throw new Error('Invalid token payload');
+    }
+
+    res.json({ userId: decoded._id });
+  } catch (error) {
+    console.error('Failed to decode token:', error);
+    res.status(401).json({ error: 'Invalid token' });
   }
 };
