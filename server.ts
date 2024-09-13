@@ -8,7 +8,7 @@ import path from 'path';
 import router from './Routers/router';
 import errorHandler from './Middlewares/errorHandlerMiddleware';
 
-// Load environment variables
+
 dotenv.config();
 
 const app = express();
@@ -17,7 +17,7 @@ mongoose()
 
 
 
-// Middleware
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json({ limit: '10mb' }));
@@ -28,7 +28,7 @@ app.use('/backend/Public', express.static(path.join(__dirname, 'Public')));
 
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://article-nest-client-in.vercel.app',
     credentials: true
 }));
 
