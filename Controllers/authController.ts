@@ -64,6 +64,7 @@ export const signUp = async (
     });
 
     const userWithoutPassword = {
+      _id:newUser._id,
       firstName: newUser.firstName,
       lastName: newUser.lastName,
       email: newUser.email,
@@ -150,6 +151,7 @@ console.log("access",accessToken);
     });
 
     const userWithoutPassword = {
+      _id:loginUser._id,
       firstName: loginUser.firstName,
       lastName: loginUser.lastName,
       email: loginUser.email,
@@ -220,6 +222,7 @@ export const resetPassword = async (
     await existingUser.save();
 
     const userWithoutPassword = {
+      _id:existingUser._id,
       firstName: existingUser .firstName,
       lastName:  existingUser.lastName,
       email:     existingUser.email,
@@ -274,6 +277,7 @@ export const updateProfile = async (
     await existingUser.save();
 
     const userWithoutPassword = {
+      _id:existingUser._id,
       firstName: existingUser .firstName,
       lastName:  existingUser.lastName,
       email:     existingUser.email,
@@ -297,29 +301,3 @@ export const updateProfile = async (
   }
 };
 
-export const getUserId = (req: Request, res: Response) => {
-  const accessToken = req.cookies['access_token'];
-  const refreshToken = req.cookies['refresh_token'];
-  
-  if (!accessToken && !refreshToken) {
-    return res.status(401).json({ error: 'No token found' });
-  }
-
-  try {
-    let decoded: DecodedToken;
-    if (accessToken) {
-      decoded = jwt.verify(accessToken, String(process.env.JWT_SECRET)) as DecodedToken;
-    } else {
-      decoded = jwt.verify(refreshToken, String(process.env.REFRESH_TOKEN_SECRET)) as DecodedToken;
-    }
-
-    if (typeof decoded === 'string' || !decoded._id) {
-      throw new Error('Invalid token payload');
-    }
-
-    res.json({ userId: decoded._id });
-  } catch (error) {
-    console.error('Failed to decode token:', error);
-    res.status(401).json({ error: 'Invalid token' });
-  }
-};

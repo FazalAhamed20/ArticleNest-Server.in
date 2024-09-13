@@ -13,7 +13,7 @@ router.post('/login', authController.login);
 router.post('/logout', authController.logout);
 router.post('/reset-password',jwtMiddleware, authController.resetPassword);
 router.post('/update-profile',jwtMiddleware, authController.updateProfile);
-router.post('/get-user-id', authController.getUserId);
+
 
 router.post('/add-article', articleController.addArticle);
 router.get('/articles', articleController.getArticles);
