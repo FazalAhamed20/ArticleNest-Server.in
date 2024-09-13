@@ -44,7 +44,8 @@ export const signUp = async (
     });
 
     res.cookie("access_token", accessToken, {
-      httpOnly: true,     
+      httpOnly: true,
+      secure:true,     
       sameSite: 'none',    
       maxAge: 7200000,    
     });
