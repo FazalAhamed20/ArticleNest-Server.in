@@ -57,10 +57,6 @@ export const getArticles = async (
     
    
     const articles: IArticle[] = await Article.find({id:userId}).lean().exec();
-  
-   
-  
- 
     res.status(200).json({
       success: true,
       message: "Articles fetched successfully",
